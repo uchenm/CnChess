@@ -68,12 +68,13 @@ public class GameClient extends Thread {
             try {
                 Object obj = readData();
                 if (obj != null) {
-                    System.out.println(obj + "====");
+                    // System.out.println(obj + "====");
 
                     if (obj instanceof Game) {
                         Game serverGame = (Game) obj;
 
-                        System.out.println("Received players=" + serverGame.getPlayers());
+                        // System.out.println("Received players=" +
+                        // serverGame.getPlayers());
                         // do synchronize with the server
                         // ModelLocator.getInstance().setCurrentGame(game);
                         ModelLocator.getInstance().getCurrentGame().syncWithServer(serverGame);
@@ -100,6 +101,7 @@ public class GameClient extends Thread {
         try {
             if (oo == null)
                 oo = new ObjectOutputStream(out);
+            oo.reset();
             oo.writeObject(obj);
             oo.flush();
         } catch (IOException e) {

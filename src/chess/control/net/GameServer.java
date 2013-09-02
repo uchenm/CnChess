@@ -30,7 +30,6 @@ import chess.control.ChessException;
 import chess.control.command.Command;
 import chess.control.command.JoinGameCommand;
 import chess.model.game.Game;
-import chess.model.player.Player;
 
 public class GameServer extends Thread {
     public static final int MAX_CLIENTS = 100;
@@ -39,19 +38,16 @@ public class GameServer extends Thread {
     private boolean isGameOn = true;
     // private MulticastSender sender;
 
-    public Set<ClientThread> playerThreads;// = new Vector<ClientThread>();
+    public Set<ClientThread> players;// = new Vector<ClientThread>();
 
     private static Game game;
-    private Set<Player> players = new HashSet<Player>();
-
-
 
     public GameServer() {
         try {
             // serverSocket = new ServerSocket(this.port, MAX_CLIENTS,
             // InetAddress.getLocalHost());
             serverSocket = new ServerSocket(this.port);
-            playerThreads = Collections.synchronizedSet(new HashSet<ClientThread>());
+            players = Collections.synchronizedSet(new HashSet<ClientThread>());
             // sender = new MulticastSender();
 
             game = new Game();
@@ -78,7 +74,7 @@ public class GameServer extends Thread {
             try {
                 Socket socket = serverSocket.accept();
                 ClientThread client = new ClientThread(socket);
-                playerThreads.add(client);
+                players.add(client);
 
                 new Thread(client).start();
             } catch (IOException e) {
@@ -102,8 +98,6 @@ public class GameServer extends Thread {
         private BufferedOutputStream out = null;
         private ObjectOutputStream oo = null;
         private ObjectInputStream oi = null;
-        
-        
 
         public ClientThread(Socket sock) {
             socket = sock;
@@ -122,8 +116,8 @@ public class GameServer extends Thread {
             while (isGameOn) {
                 try {
                     Object obj = read();
-                    if (obj != null) {                        
-                        
+                    if (obj != null) {
+
                         if (obj instanceof Command) {
                             Command command = (Command) obj;
                             try {
@@ -133,11 +127,6 @@ public class GameServer extends Thread {
                             }
                         }
                         if (obj instanceof JoinGameCommand) {
-                            // try{Thread.sleep(1000);}catch(Exception ex){}
-                            //System.out.println("players on server=" + game.getPlayers());
-                            //players.add(((JoinGameCommand) obj).getPlayer());
-                            
-                            //boardcast(players);
                             boardcast(game);
                         } else {
                             boardcast(obj);
@@ -190,13 +179,15 @@ public class GameServer extends Thread {
                 // System.out.println(obj + " got on server!");
                 if (oo == null)
                     oo = new ObjectOutputStream(out);
-                if (obj instanceof Game) {
-                    Game g = (Game) obj;
-                    System.out.println("Players in send()=" + g.getPlayers() + " got on server!");
-                }
+                // if (obj instanceof Game) {
+                // Game g = (Game) obj;
+                // System.out.println("Players in send()=" + g.getPlayers() +
+                // " got on server!");
+                // }
+                oo.reset();
                 oo.writeObject(obj);
                 oo.flush();
-                
+
             } catch (Exception ex) {
                 // ex.printStackTrace();
                 System.out.println(ex.getMessage());
@@ -206,13 +197,9 @@ public class GameServer extends Thread {
 
         /* Send to all players on the server */
         public void boardcast(Object obj) throws ChessException {
-//            System.out.println(obj + " got on server!");
-//            if (obj instanceof Game) {
-//                Game g = (Game) obj;
-//                System.out.println("Players=" + g.getPlayers() + " got on server!");
-//            }
-            synchronized (playerThreads) {
-                for (ClientThread c : playerThreads) {
+            // System.out.println(obj + " got on server!");
+            synchronized (players) {
+                for (ClientThread c : players) {
                     c.send(obj);
                     if (obj instanceof Game) {
                         Game g = (Game) obj;
