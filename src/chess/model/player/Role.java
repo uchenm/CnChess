@@ -20,9 +20,9 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public abstract class Role implements Serializable {
 
-    public static int RED_PLAYER = 0;
+    public static int RED_PLAYER   = 0;
     public static int BLACK_PLAYER = 1;
-    public static int OBSEVER = 2;
+    public static int OBSEVER      = 2;
 
     // private getRole
 

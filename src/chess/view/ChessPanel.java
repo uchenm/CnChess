@@ -42,11 +42,11 @@ public class ChessPanel extends JPanel implements Observer {
     private static final long serialVersionUID = 1L;
 
     // the images of the two players
-    private Image[][] images = new Image[2][16];
+    private Image[][]         images           = new Image[2][16];
     // the default toolkit of AWT
-    private Toolkit theKit;
+    private Toolkit           theKit;
     // the tool to help load images
-    private MediaTracker mt;
+    private MediaTracker      mt;
 
     public ChessPanel(int width, int height) throws IOException {
 
@@ -93,8 +93,9 @@ public class ChessPanel extends JPanel implements Observer {
 
         Location viewLoc = ViewHelper.getViewLoc(stone.getLoc());
 
-        g.drawImage(images[i][j], board.getCoordinate(viewLoc).getX(), board.getCoordinate(viewLoc)
-                .getY(), board.getGridWidth(), board.getGridWidth(), this);
+        g.drawImage(images[i][j], board.getCoordinate(viewLoc).getX(), board
+                .getCoordinate(viewLoc).getY(), board.getGridWidth(), board
+                .getGridWidth(), this);
 
         if (stone.isSelected())
             drawSelectionLabel(g, stone, game);
@@ -103,7 +104,8 @@ public class ChessPanel extends JPanel implements Observer {
 
     protected void drawSelectionLabel(Graphics g, Stone stone, Game game) {
         Graphics2D g2d = (Graphics2D) g;
-        drawSelectionLines(g2d, ViewHelper.getViewLoc(stone.getLoc()), Color.GREEN);
+        drawSelectionLines(g2d, ViewHelper.getViewLoc(stone.getLoc()),
+                Color.GREEN);
     }
 
     private void drawSelectionLines(Graphics2D g2d, Location loc, Color color) {
@@ -117,45 +119,53 @@ public class ChessPanel extends JPanel implements Observer {
         g2d.setColor(color);
         g2d.setStroke(new BasicStroke(3));
 
-        drawTopLeftCorner(g2d, new Location(coord.getX() + smallMove, coord.getY() + smallMove),
+        drawTopLeftCorner(
+                g2d,
+                new Location(coord.getX() + smallMove, coord.getY() + smallMove),
                 color, smallDelt);
-        drawTopRightCorner(g2d, new Location(coord.getX() + deltX - smallMove, coord.getY()
-                + smallMove), color, smallDelt);
-        drawBotLeftCorner(g2d, new Location(coord.getX() + smallMove, coord.getY() + deltY
-                - smallMove), color, smallDelt);
-        drawBotRightCorner(g2d, new Location(coord.getX() + deltX - smallMove, coord.getY() + deltY
-                - smallMove), color, smallDelt);
+        drawTopRightCorner(g2d, new Location(coord.getX() + deltX - smallMove,
+                coord.getY() + smallMove), color, smallDelt);
+        drawBotLeftCorner(g2d,
+                new Location(coord.getX() + smallMove, coord.getY() + deltY
+                        - smallMove), color, smallDelt);
+        drawBotRightCorner(g2d, new Location(coord.getX() + deltX - smallMove,
+                coord.getY() + deltY - smallMove), color, smallDelt);
     }
 
-    private void drawTopLeftCorner(Graphics2D g2d, Location loc, Color color, final int smallDelt) {
+    private void drawTopLeftCorner(Graphics2D g2d, Location loc, Color color,
+            final int smallDelt) {
         g2d.setColor(color);
         g2d.setStroke(new BasicStroke(3));
         g2d.drawLine(loc.getX(), loc.getY() + smallDelt, loc.getX(), loc.getY());
         g2d.drawLine(loc.getX(), loc.getY(), loc.getX() + smallDelt, loc.getY());
     }
 
-    private void drawTopRightCorner(Graphics2D g2d, Location loc, Color color, final int smallDelt) {
+    private void drawTopRightCorner(Graphics2D g2d, Location loc, Color color,
+            final int smallDelt) {
         g2d.setColor(color);
         g2d.setStroke(new BasicStroke(3));
         g2d.drawLine(loc.getX(), loc.getY() + smallDelt, loc.getX(), loc.getY());
         g2d.drawLine(loc.getX(), loc.getY(), loc.getX() - smallDelt, loc.getY());
     }
 
-    private void drawBotLeftCorner(Graphics2D g2d, Location loc, Color color, final int smallDelt) {
+    private void drawBotLeftCorner(Graphics2D g2d, Location loc, Color color,
+            final int smallDelt) {
         g2d.setColor(color);
         g2d.setStroke(new BasicStroke(3));
         g2d.drawLine(loc.getX(), loc.getY() - smallDelt, loc.getX(), loc.getY());
         g2d.drawLine(loc.getX(), loc.getY(), loc.getX() + smallDelt, loc.getY());
     }
 
-    private void drawBotRightCorner(Graphics2D g2d, Location loc, Color color, final int smallDelt) {
+    private void drawBotRightCorner(Graphics2D g2d, Location loc, Color color,
+            final int smallDelt) {
         g2d.setColor(color);
         g2d.setStroke(new BasicStroke(3));
         g2d.drawLine(loc.getX(), loc.getY() - smallDelt, loc.getX(), loc.getY());
         g2d.drawLine(loc.getX(), loc.getY(), loc.getX() - smallDelt, loc.getY());
     }
 
-    protected void drawLastMoveLabel(Graphics g, Location from, Location to, Game game) {
+    protected void drawLastMoveLabel(Graphics g, Location from, Location to,
+            Game game) {
         Graphics2D g2d = (Graphics2D) g;
         drawSelectionLines(g2d, ViewHelper.getViewLoc(from), Color.BLUE);
         drawSelectionLines(g2d, ViewHelper.getViewLoc(to), Color.BLUE);

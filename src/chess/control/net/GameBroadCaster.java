@@ -32,10 +32,10 @@ public class GameBroadCaster extends Thread {
         socket = new MulticastSocket(8888);
     }
 
-    private long FIVE_SECONDS = 1000;
-    private boolean founded = false;
-    protected MulticastSocket socket = null;
-    protected BufferedReader in = null;
+    private long              FIVE_SECONDS = 1000;
+    private boolean           founded      = false;
+    protected MulticastSocket socket       = null;
+    protected BufferedReader  in           = null;
 
     public void run() {
         while (!founded) {
@@ -48,7 +48,8 @@ public class GameBroadCaster extends Thread {
 
                 // send it
                 InetAddress group = InetAddress.getByName("224.2.2.3");
-                DatagramPacket packet = new DatagramPacket(buf, buf.length, group, 8888);
+                DatagramPacket packet = new DatagramPacket(buf, buf.length,
+                        group, 8888);
                 socket.send(packet);
 
                 // sleep for a while
@@ -64,7 +65,7 @@ public class GameBroadCaster extends Thread {
         }
     }
 
-//    public static void main(String[] args) throws Exception {
-//        new GameBroadCaster().start();
-//    }
+    // public static void main(String[] args) throws Exception {
+    // new GameBroadCaster().start();
+    // }
 }

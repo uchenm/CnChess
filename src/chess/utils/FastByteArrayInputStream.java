@@ -9,17 +9,17 @@ public class FastByteArrayInputStream extends InputStream {
     /**
      * Our byte buffer
      */
-    protected byte[] buf = null;
+    protected byte[] buf   = null;
 
     /**
      * Number of bytes that we can read from the buffer
      */
-    protected int count = 0;
+    protected int    count = 0;
 
     /**
      * Number of bytes that have been read from the buffer
      */
-    protected int pos = 0;
+    protected int    pos   = 0;
 
     public FastByteArrayInputStream(byte[] buf, int count) {
         this.buf = buf;

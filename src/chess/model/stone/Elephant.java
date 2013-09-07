@@ -51,7 +51,8 @@ public class Elephant extends Stone implements Cloneable {
         int xdiff = loc.getX() - this.loc.getX();
         int ydiff = loc.getY() - this.loc.getY();
         // the stoneID of the "elephant's eye"
-        Location tempid = new Location(this.loc.getX() + xdiff / 2, this.loc.getY() + ydiff / 2);
+        Location tempid = new Location(this.loc.getX() + xdiff / 2,
+                this.loc.getY() + ydiff / 2);
 
         // when the stone's home is in the bottom
         if (getOwner().isRed()) {

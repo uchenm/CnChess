@@ -18,11 +18,23 @@ package chess.model.game;
 public class GameConstants {
 
     public static enum GameState {
-        READY, NOTREADY, STARTED, ENDED, REPLAY_STARTED, REPLAY_PAUSED;
+        GAME_PRE, GAME_ON, GAME_OVER,
     }
 
     public static enum ResultType {
-        PEACE, RedWin, BlackWin
+        PEACE, REDWIN, BLACKWIN
+    }
+
+    public static enum PlayerState {
+        LOGGED_IN, // the player has logged in.
+        LOGGED_OUT, // the player has logged out.
+        IN_A_ROOM, // player has entered into a chess room but doesn't sit down.
+        AT_A_TABLE, // player is at the chess table but is not playing the game
+        IN_A_GAME// the player is playing the game.
+    }
+
+    public static enum ReplayState {
+        REPLAY_READY, REPLAY_STARTED, REPLAY_PAUSED;
     }
 
 }

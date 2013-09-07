@@ -47,40 +47,39 @@ import chess.model.stone.Soldier;
 import chess.model.stone.Stone;
 import chess.utils.StringUtils;
 
-
 public class Game extends Observable implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID  = 1L;
 
-    private Vector<Player> players = new Vector<Player>();
+    private Vector<Player>    players           = new Vector<Player>();
 
     // the stones of the two players
-    private Stone[][] stones = new Stone[2][16];
+    private Stone[][]         stones            = new Stone[2][16];
 
-    private GameState gameState;
+    private GameState         gameState;
 
-    private Stone selectedStone;
+    private Stone             selectedStone;
 
-    private Role currentRoleToPlay = new BlackRole();
+    private Role              currentRoleToPlay = new BlackRole();
 
-    private Player currentPlayer;
+    private Player            currentPlayer;
 
-    private Queue<String> messageQueue;
+    private Queue<String>     messageQueue;
 
-    private Stack<Move> gameStack;
+    private Stack<Move>       gameStack;
     // 0--single machine player, 1--local net, 2--
     // chess.net
-    private int gameType = 0;
+    private int               gameType          = 0;
 
-    private Move replayMove;
+    private Move              replayMove;
 
-    private Player blackPlayer;
+    private Player            blackPlayer;
 
-    private Player redPlayer;
+    private Player            redPlayer;
 
-    private GameResult gameResult;
+    private GameResult        gameResult;
 
-    private String statusMessage;
+    private String            statusMessage;
 
     /**
      * Constructor
@@ -89,14 +88,14 @@ public class Game extends Observable implements Serializable {
 
         createStones();
         this.gameStack = new Stack<Move>();
-        this.gameState = GameState.STARTED;
+        this.gameState = GameState.GAME_ON;
     }
 
     public void endGame(Role loosingSole) {
 
         // GameResult result=new GameResult();
 
-        this.setGameState(GameState.ENDED);
+        this.setGameState(GameState.GAME_OVER);
     }
 
     public void resetStones() {
@@ -311,7 +310,8 @@ public class Game extends Observable implements Serializable {
         }
 
         for (int i = 0; i < 16; i++) {
-            if (s[oppIndex][i].isAlive() && s[oppIndex][i].isLegalMove(general.getLoc())) {
+            if (s[oppIndex][i].isAlive()
+                    && s[oppIndex][i].isLegalMove(general.getLoc())) {
                 return true;
             }
         }
@@ -419,8 +419,8 @@ public class Game extends Observable implements Serializable {
             }
         }
 
-        String fileName = blackPlayer.getName() + "_vs_" + redPlayer.getName() + "_"
-                + StringUtils.getDate() + ".cnchess";
+        String fileName = blackPlayer.getName() + "_vs_" + redPlayer.getName()
+                + "_" + StringUtils.getDate() + ".cnchess";
         ObjectOutputStream oo = null;
         try {
             OutputStream out = new FileOutputStream(new File(fileName));
@@ -543,7 +543,7 @@ public class Game extends Observable implements Serializable {
     }
 
     public Player getOwner(Role role) {
-        System.out.println("Players="+players);
+        System.out.println("Players=" + players);
         for (int index = 0; index < players.size(); index++) {
             Player p = players.get(index);
             if (role.equals(p.getRole())) {

@@ -38,20 +38,20 @@ public class ModelLocator {
     }
 
     // =========================================================================================#
-    private Game currentGame;
+    private Game       currentGame;
 
     // private int width;
     // private int height;
 
     private BoardModel board;
 
-    private boolean bgmusic;
+    private boolean    bgmusic;
 
-    private boolean soundEffect;
+    private boolean    soundEffect;
 
-    private Player player;
+    private Player     player;
 
-    private boolean redOnBottom = false;
+    private boolean    redOnBottom = false;
 
     public boolean isRedOnBottom() {
         return redOnBottom;

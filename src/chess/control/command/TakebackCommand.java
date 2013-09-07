@@ -19,24 +19,27 @@ import java.io.Serializable;
 
 import chess.control.ChessException;
 import chess.model.game.Game;
-import chess.model.game.GameConstants.GameState;
-import chess.model.game.GameConstants.ResultType;
-import chess.model.game.GameResult;
+import chess.model.game.Move;
+import chess.model.player.Player;
 
 @SuppressWarnings("serial")
-public class SeekPeaceCommand implements Command, Serializable {
+public class TakebackCommand implements Command, Serializable {
+
+    private Player player;
+
+    public TakebackCommand(Player p) {
+        this.player = p;
+    }
 
     public void execute(Game game) throws ChessException {
-        // move.doMove(game);
-        GameResult gameResult = new GameResult();
-        gameResult.setResultType(ResultType.PEACE);
-        gameResult.setBlackPlayer(game.getBlackPlayer());
-        gameResult.setRedPlayer(game.getRedPlayer());
+        //
 
-        game.setGameResult(gameResult);
-
-        game.setGameState(GameState.GAME_OVER);
-        game.saveGame();
-
+        Move move = game.getGameStack().lastElement();
+        move.unDoMove(game);
+        if (!player.getRole().equals(move.getMovingRole())) {
+            move = game.getGameStack().lastElement();
+            move.unDoMove(game);
+        }
     }
+
 }

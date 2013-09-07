@@ -54,35 +54,35 @@ import chess.model.player.Player;
 public class ChessCreator extends JFrame {
 
     // the width of the board frame
-    private int frameWidth = 400;
+    private int       frameWidth  = 400;
 
     // the height of the board frame
-    private int frameHeight = 300;
+    private int       frameHeight = 300;
 
     // size of window
     private Dimension wndSize;
 
     // the default toolkit of AWT
-    private Toolkit theKit;
+    private Toolkit   theKit;
 
     private TextField creatorName;
     private TextField joinorName;
 
     // --------- the controllers showed in the frame ------------- //
-    Panel selpanel = new Panel();
-    Label creatornm = new Label("Creator : ");
-    Label joinernm = new Label("Joiner  : ");
-    Choice creatorch = new Choice();
-    Choice joinorch = new Choice();
-    List chatlist = new List(20, true);
+    Panel             selpanel    = new Panel();
+    Label             creatornm   = new Label("Creator : ");
+    Label             joinernm    = new Label("Joiner  : ");
+    Choice            creatorch   = new Choice();
+    Choice            joinorch    = new Choice();
+    List              chatlist    = new List(20, true);
     // JList chat list = new JList();
-    TextField chatinput = new TextField(80);
+    TextField         chatinput   = new TextField(80);
 
-    Button bt_start = new Button(" Start ");
+    Button            bt_start    = new Button(" Start ");
     // Button bt_send = new Button(" Send ");
-    Button bt_Cancel = new Button(" Cancel ");
-    private String sCreator;
-    private String sJoinor;
+    Button            bt_Cancel   = new Button(" Cancel ");
+    private String    sCreator;
+    private String    sJoinor;
 
     public ChessCreator(Player creator) {
 
@@ -178,16 +178,17 @@ public class ChessCreator extends JFrame {
         wndSize = theKit.getScreenSize();
 
         // determine the start point and the size of the board frame
-        setBounds((wndSize.width - frameWidth) / 2, (wndSize.height - frameHeight) / 2, frameWidth,
-                frameHeight);
+        setBounds((wndSize.width - frameWidth) / 2,
+                (wndSize.height - frameHeight) / 2, frameWidth, frameHeight);
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         // fix the size of the frame
         addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent e) {
-                setBounds((wndSize.width - frameWidth) / 2, (wndSize.height - frameHeight) / 2,
-                        frameWidth, frameHeight);
+                setBounds((wndSize.width - frameWidth) / 2,
+                        (wndSize.height - frameHeight) / 2, frameWidth,
+                        frameHeight);
 
             }
         });
@@ -206,7 +207,8 @@ public class ChessCreator extends JFrame {
         ClientProxy.getInstance().setClient(client);
         ClientProxy.getInstance().startListening();
         // ClientProxy.getInstance().initGame();
-        ClientProxy.getInstance().executeRemoteCommand(new JoinGameCommand(creator));
+        ClientProxy.getInstance().executeRemoteCommand(
+                new JoinGameCommand(creator));
         ModelLocator.getInstance().setPlayer(creator);
     }
 

@@ -51,15 +51,17 @@ public class Advisor extends Stone implements Cloneable {
 
         // when the stone's home is in the bottom
         if (getOwner().isRed()) {
-            if (loc.getX() >= 3 && loc.getX() <= 5 && loc.getY() >= 7 && loc.getY() <= 9
-                    && Math.abs(xdiff) == 1 && Math.abs(ydiff) == 1) {
+            if (loc.getX() >= 3 && loc.getX() <= 5 && loc.getY() >= 7
+                    && loc.getY() <= 9 && Math.abs(xdiff) == 1
+                    && Math.abs(ydiff) == 1) {
                 result = true;
             }
         }
         // when the stone's home is on the top
         else {
-            if (loc.getX() >= 3 && loc.getX() <= 5 && loc.getY() >= 0 && loc.getY() <= 2
-                    && Math.abs(xdiff) == 1 && Math.abs(ydiff) == 1) {
+            if (loc.getX() >= 3 && loc.getX() <= 5 && loc.getY() >= 0
+                    && loc.getY() <= 2 && Math.abs(xdiff) == 1
+                    && Math.abs(ydiff) == 1) {
                 result = true;
             }
         }

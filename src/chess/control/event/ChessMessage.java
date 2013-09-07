@@ -17,22 +17,22 @@ package chess.control.event;
 
 public class ChessMessage {
 
-    public static final int DEFAULT = 0;
+    public static final int DEFAULT           = 0;
 
-    public static final int STONE_SELECTED = 1;
+    public static final int STONE_SELECTED    = 1;
 
-    public static final int STONE_MOVE = 2;
+    public static final int STONE_MOVE        = 2;
 
-    public static final int STONE_KILLED = 3;
+    public static final int STONE_KILLED      = 3;
 
     public static final int GENERAL_IN_DANGER = 4;
 
-    public static final int GAME_OVER = 5;
+    public static final int GAME_OVER         = 5;
 
-    public static final int BG_MUSIC = 6;
+    public static final int BG_MUSIC          = 6;
 
-    private int msgType;
-    private String msgContent;
+    private int             msgType;
+    private String          msgContent;
 
     public ChessMessage(String msgContent) {
         this(ChessMessage.DEFAULT, msgContent);

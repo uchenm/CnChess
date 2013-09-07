@@ -30,7 +30,8 @@ public class ImageUtil {
      *            ����ѡ�� :true �Ŵ�; false ��С;
      */
 
-    public static void scale(String srcImageFile, String result, int scale, boolean flag) {
+    public static void scale(String srcImageFile, String result, int scale,
+            boolean flag) {
 
         try {
 
@@ -44,8 +45,10 @@ public class ImageUtil {
                 width = width / scale;
                 height = height / scale;
             }
-            Image image = src.getScaledInstance(width, height, Image.SCALE_DEFAULT);
-            BufferedImage tag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+            Image image = src.getScaledInstance(width, height,
+                    Image.SCALE_DEFAULT);
+            BufferedImage tag = new BufferedImage(width, height,
+                    BufferedImage.TYPE_INT_RGB);
             Graphics g = tag.getGraphics();
             g.drawImage(image, 0, 0, null); // ������С���ͼ
             g.dispose();
@@ -68,7 +71,8 @@ public class ImageUtil {
      *            ����Ƭ�߶�
      */
 
-    public static void cut(String srcImageFile, String descDir, int destWidth, int destHeight) {
+    public static void cut(String srcImageFile, String descDir, int destWidth,
+            int destHeight) {
         try {
             Image img;
             ImageFilter cropFilter; // ��ȡԴͼ��
@@ -76,7 +80,8 @@ public class ImageUtil {
             int srcWidth = bi.getHeight(); // Դͼ���
             int srcHeight = bi.getWidth(); // Դͼ�߶�
             if (srcWidth > destWidth && srcHeight > destHeight) {
-                Image image = bi.getScaledInstance(srcWidth, srcHeight, Image.SCALE_DEFAULT);
+                Image image = bi.getScaledInstance(srcWidth, srcHeight,
+                        Image.SCALE_DEFAULT);
                 destWidth = 200; // ��Ƭ���
                 destHeight = 150; // ��Ƭ�߶�
                 int cols = 0; // ��Ƭ��������
@@ -98,17 +103,19 @@ public class ImageUtil {
                     for (int j = 0; j < cols; j++) {
                         // �ĸ�����ֱ�Ϊͼ��������Ϳ��
                         // ��: CropImageFilter(int x,int y,int width,int height)
-                        cropFilter = new CropImageFilter(j * 200, i * 150, destWidth, destHeight);
+                        cropFilter = new CropImageFilter(j * 200, i * 150,
+                                destWidth, destHeight);
                         img = Toolkit.getDefaultToolkit().createImage(
-                                new FilteredImageSource(image.getSource(), cropFilter));
-                        BufferedImage tag = new BufferedImage(destWidth, destHeight,
-                                BufferedImage.TYPE_INT_RGB);
+                                new FilteredImageSource(image.getSource(),
+                                        cropFilter));
+                        BufferedImage tag = new BufferedImage(destWidth,
+                                destHeight, BufferedImage.TYPE_INT_RGB);
                         Graphics g = tag.getGraphics();
                         g.drawImage(img, 0, 0, null); // ������С���ͼ
                         g.dispose();
                         // ���Ϊ�ļ�
-                        ImageIO.write(tag, "JPEG", new File(descDir + "pre_map_" + i + "_" + j
-                                + ".jpg"));
+                        ImageIO.write(tag, "JPEG", new File(descDir
+                                + "pre_map_" + i + "_" + j + ".jpg"));
                     }
                 }
             }

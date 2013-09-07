@@ -11,8 +11,8 @@ public class FastByteArrayOutputStream extends OutputStream {
     /**
      * Buffer and size
      */
-    protected byte[] buf = null;
-    protected int size = 0;
+    protected byte[] buf  = null;
+    protected int    size = 0;
 
     /**
      * Constructs a stream with buffer capacity size 5K

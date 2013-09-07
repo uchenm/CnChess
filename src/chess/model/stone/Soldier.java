@@ -57,7 +57,8 @@ public class Soldier extends Stone implements Cloneable {
                 result = true;
             }
             if (this.loc.getY() < 5
-                    && ((ydiff == -1 && xdiff == 0) || (ydiff == 0 && Math.abs(xdiff) == 1))) {
+                    && ((ydiff == -1 && xdiff == 0) || (ydiff == 0 && Math
+                            .abs(xdiff) == 1))) {
                 result = true;
             }
         }
@@ -67,7 +68,8 @@ public class Soldier extends Stone implements Cloneable {
                 result = true;
             }
             if (this.loc.getY() >= 5
-                    && ((ydiff == 1 && xdiff == 0) || (ydiff == 0 && Math.abs(xdiff) == 1))) {
+                    && ((ydiff == 1 && xdiff == 0) || (ydiff == 0 && Math
+                            .abs(xdiff) == 1))) {
                 result = true;
             }
         }
@@ -94,13 +96,15 @@ public class Soldier extends Stone implements Cloneable {
             // horizontally
             if (this.loc.getY() < 5) {
                 if (getLoc().getX() > 0) {
-                    legalMove = new Location(getLoc().getX() - 1, getLoc().getY());
+                    legalMove = new Location(getLoc().getX() - 1, getLoc()
+                            .getY());
                     if (!this.loc.equals(legalMove) && isLegalMove(legalMove)) {
                         v.add(legalMove);
                     }
                 }
                 if (getLoc().getX() < 8) {
-                    legalMove = new Location(getLoc().getX() + 1, getLoc().getY());
+                    legalMove = new Location(getLoc().getX() + 1, getLoc()
+                            .getY());
                     if (!this.loc.equals(legalMove) && isLegalMove(legalMove)) {
                         v.add(legalMove);
                     }
@@ -122,13 +126,15 @@ public class Soldier extends Stone implements Cloneable {
             // horizontally
             if (this.loc.getY() < 5) {
                 if (getLoc().getX() > 0) {
-                    legalMove = new Location(getLoc().getX() - 1, getLoc().getY());
+                    legalMove = new Location(getLoc().getX() - 1, getLoc()
+                            .getY());
                     if (!this.loc.equals(legalMove) && isLegalMove(legalMove)) {
                         v.add(legalMove);
                     }
                 }
                 if (getLoc().getX() < 8) {
-                    legalMove = new Location(getLoc().getX() + 1, getLoc().getY());
+                    legalMove = new Location(getLoc().getX() + 1, getLoc()
+                            .getY());
                     if (!this.loc.equals(legalMove) && isLegalMove(legalMove)) {
                         v.add(legalMove);
                     }

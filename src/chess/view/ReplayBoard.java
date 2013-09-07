@@ -58,26 +58,26 @@ public class ReplayBoard extends JFrame {
     private static final long serialVersionUID = 1L;
 
     // the width of the board frame
-    private int frameWidth = 860;
+    private int               frameWidth       = 860;
 
     // the height of the board frame
-    private int frameHeight = 800;
+    private int               frameHeight      = 800;
 
     // size of window
-    private Dimension wndSize;
+    private Dimension         wndSize;
 
     // the default toolkit of AWT
-    private Toolkit theKit;
+    private Toolkit           theKit;
 
-    private ReplayPanel chessPanel;
+    private ReplayPanel       chessPanel;
 
     // private ChessMenu chessMenu;
 
-    private StatusBar statusBar;
+    private StatusBar         statusBar;
 
-    private GameReplayer replayer;
-    private Game game;
-    private JList stepList;
+    private GameReplayer      replayer;
+    private Game              game;
+    private JList             stepList;
 
     public ReplayBoard(Game game) throws IOException {
         this.game = game;
@@ -105,13 +105,14 @@ public class ReplayBoard extends JFrame {
         // window size
         wndSize = theKit.getScreenSize();
         // determine the start point and the size of the board frame
-        setBounds((wndSize.width - frameWidth) / 2, (wndSize.height - frameHeight) / 2, frameWidth,
-                frameHeight);
+        setBounds((wndSize.width - frameWidth) / 2,
+                (wndSize.height - frameHeight) / 2, frameWidth, frameHeight);
         // fix the size of the frame
         addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent e) {
-                setBounds((wndSize.width - frameWidth) / 2, (wndSize.height - frameHeight) / 2,
-                        frameWidth, frameHeight);
+                setBounds((wndSize.width - frameWidth) / 2,
+                        (wndSize.height - frameHeight) / 2, frameWidth,
+                        frameHeight);
 
             }
         });
@@ -133,7 +134,8 @@ public class ReplayBoard extends JFrame {
         getContentPane().add(bottomPanel, BorderLayout.SOUTH);
     }
 
-    private void initChessPanel(final int width, final int height) throws IOException {
+    private void initChessPanel(final int width, final int height)
+            throws IOException {
 
         JPanel leftPanel = new JPanel();
         leftPanel.setLayout(new BorderLayout());
@@ -143,7 +145,8 @@ public class ReplayBoard extends JFrame {
         lPane.setPreferredSize(new Dimension(width, height));
 
         // Chess Board as background image.
-        Image backgroundImg = ImageIO.read(new File("res/images/ChessBoard.png"));
+        Image backgroundImg = ImageIO
+                .read(new File("res/images/ChessBoard.png"));
         ImagePanel background = new ImagePanel(backgroundImg, width, height);
 
         lPane.add(background, new Integer(0));
@@ -176,7 +179,8 @@ public class ReplayBoard extends JFrame {
                             "Chinese Chess Game File", "cnchess");
                     chooser.setFileFilter(filter);
                     chooser.showOpenDialog(null);
-                    String filepath = chooser.getSelectedFile().getAbsolutePath();
+                    String filepath = chooser.getSelectedFile()
+                            .getAbsolutePath();
                     ois = new ObjectInputStream(new FileInputStream(filepath));
 
                     game = (Game) ois.readObject();

@@ -56,11 +56,13 @@ public class Horse extends Stone implements Cloneable {
 
         // if the shap is "RI" and the horse's foot does not exist, then legal
         if (Math.abs(ydiff) == 2 && Math.abs(xdiff) == 1) {
-            tempid = new Location(this.loc.getX(), this.loc.getY() + ydiff / Math.abs(ydiff));
+            tempid = new Location(this.loc.getX(), this.loc.getY() + ydiff
+                    / Math.abs(ydiff));
             if (!game.hasStone(tempid))
                 result = true;
         } else if (Math.abs(xdiff) == 2 && Math.abs(ydiff) == 1) {
-            tempid = new Location(this.loc.getX() + xdiff / Math.abs(xdiff), this.loc.getY());
+            tempid = new Location(this.loc.getX() + xdiff / Math.abs(xdiff),
+                    this.loc.getY());
             if (!game.hasStone(tempid))
                 result = true;
         }
@@ -74,43 +76,51 @@ public class Horse extends Stone implements Cloneable {
         Location legalMove = null;
 
         if (getLoc().getX() - 1 >= 0 && getLoc().getY() - 2 >= 0) {
-            if (isLegalMove(legalMove = new Location(getLoc().getX() - 1, getLoc().getY() - 2))) {
+            if (isLegalMove(legalMove = new Location(getLoc().getX() - 1,
+                    getLoc().getY() - 2))) {
                 v.add(legalMove);
             }
         }
         if (getLoc().getX() + 1 <= 8 && getLoc().getY() - 2 >= 0) {
-            if (isLegalMove(legalMove = new Location(getLoc().getX() + 1, getLoc().getY() - 2))) {
+            if (isLegalMove(legalMove = new Location(getLoc().getX() + 1,
+                    getLoc().getY() - 2))) {
                 v.add(legalMove);
             }
         }
         if (getLoc().getX() - 1 >= 0 && getLoc().getY() + 2 <= 9) {
-            if (isLegalMove(legalMove = new Location(getLoc().getX() - 1, getLoc().getY() + 2))) {
+            if (isLegalMove(legalMove = new Location(getLoc().getX() - 1,
+                    getLoc().getY() + 2))) {
                 v.add(legalMove);
             }
         }
         if (getLoc().getX() + 1 <= 8 && getLoc().getY() + 2 <= 9) {
-            if (isLegalMove(legalMove = new Location(getLoc().getX() + 1, getLoc().getY() + 2))) {
+            if (isLegalMove(legalMove = new Location(getLoc().getX() + 1,
+                    getLoc().getY() + 2))) {
                 v.add(legalMove);
             }
         }
         // ------------------------------
         if (getLoc().getX() - 2 >= 0 && getLoc().getY() - 1 >= 0) {
-            if (isLegalMove(legalMove = new Location(getLoc().getX() - 2, getLoc().getY() - 1))) {
+            if (isLegalMove(legalMove = new Location(getLoc().getX() - 2,
+                    getLoc().getY() - 1))) {
                 v.add(legalMove);
             }
         }
         if (getLoc().getX() + 2 <= 8 && getLoc().getY() - 1 >= 0) {
-            if (isLegalMove(legalMove = new Location(getLoc().getX() + 2, getLoc().getY() - 1))) {
+            if (isLegalMove(legalMove = new Location(getLoc().getX() + 2,
+                    getLoc().getY() - 1))) {
                 v.add(legalMove);
             }
         }
         if (getLoc().getX() - 2 >= 0 && getLoc().getY() + 1 <= 9) {
-            if (isLegalMove(legalMove = new Location(getLoc().getX() - 2, getLoc().getY() + 1))) {
+            if (isLegalMove(legalMove = new Location(getLoc().getX() - 2,
+                    getLoc().getY() + 1))) {
                 v.add(legalMove);
             }
         }
         if (getLoc().getX() + 2 <= 8 && getLoc().getY() + 1 <= 9) {
-            if (isLegalMove(legalMove = new Location(getLoc().getX() + 2, getLoc().getY() + 1))) {
+            if (isLegalMove(legalMove = new Location(getLoc().getX() + 2,
+                    getLoc().getY() + 1))) {
                 v.add(legalMove);
             }
         }

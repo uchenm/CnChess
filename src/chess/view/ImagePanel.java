@@ -28,7 +28,7 @@ public class ImagePanel extends JPanel {
      * 
      */
     private static final long serialVersionUID = 1L;
-    private Image image;
+    private Image             image;
 
     public ImagePanel(String img, int width, int height) {
         this(new ImageIcon(img).getImage(), width, height);
@@ -55,8 +55,8 @@ public class ImagePanel extends JPanel {
     }
 
     public static void main(String[] args) {
-        ImagePanel panel = new ImagePanel(new ImageIcon("images/ChessBoard.png").getImage(), 800,
-                600);
+        ImagePanel panel = new ImagePanel(
+                new ImageIcon("images/ChessBoard.png").getImage(), 800, 600);
         panel.setSize(1000, 600);
 
         JFrame frame = new JFrame();

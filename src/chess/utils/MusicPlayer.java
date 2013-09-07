@@ -33,7 +33,8 @@ public class MusicPlayer {
             // AudioSystem.getAudioInputStream(
             // Main.class.getResourceAsStream("/path/to/sounds/" +
             // url));
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(soundFile);
+            AudioInputStream inputStream = AudioSystem
+                    .getAudioInputStream(soundFile);
             clip.open(inputStream);
 
         } catch (Exception e) {

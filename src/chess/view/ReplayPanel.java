@@ -29,7 +29,7 @@ public class ReplayPanel extends ChessPanel {
 
     private static final long serialVersionUID = 1L;
 
-    private Game game;
+    private Game              game;
 
     public Game getGame() {
         return game;
@@ -70,7 +70,8 @@ public class ReplayPanel extends ChessPanel {
             }
             Move move = game.getReplayMove();
             if (move != null)
-                drawLastMoveLabel(g, move.getFrom(), move.getTo(), getCurrentGame());
+                drawLastMoveLabel(g, move.getFrom(), move.getTo(),
+                        getCurrentGame());
         }
     }
 

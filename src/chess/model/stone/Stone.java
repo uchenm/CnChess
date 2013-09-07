@@ -43,22 +43,22 @@ public abstract class Stone implements Serializable, Cloneable {
         this.game = game;
     }
 
-    protected Game game;
-    protected Role owner;
+    protected Game     game;
+    protected Role     owner;
 
     // (1)true -> alive, (2)false -> killed
-    protected boolean alive = true;
+    protected boolean  alive    = true;
 
     // the current location of the stone
     protected Location loc;
 
     // the image of the stone
-    protected String imageName;
+    protected String   imageName;
 
     // whether the stone is being dragged by user
-    protected boolean selected = false;
+    protected boolean  selected = false;
 
-    protected int id;
+    protected int      id;
 
     // protected ChessBoard frame;
 
@@ -117,7 +117,8 @@ public abstract class Stone implements Serializable, Cloneable {
 
     public boolean isLegalMove(Location loc) {
         // the target position can't have an ally
-        if (game.getStone(loc) != null && game.getStone(loc).getOwner().equals(this.getOwner())) {
+        if (game.getStone(loc) != null
+                && game.getStone(loc).getOwner().equals(this.getOwner())) {
             return false;
         }
         return isGameRuleMove(loc);
@@ -130,14 +131,16 @@ public abstract class Stone implements Serializable, Cloneable {
     public boolean equals(Stone s) {
         if (s == null)
             return false;
-        return (this.loc.equals(s.getLoc()) && this.getOwner().equals(s.getOwner()) && this
-                .getImageName().equals(s.getImageName()));
+        return (this.loc.equals(s.getLoc())
+                && this.getOwner().equals(s.getOwner()) && this.getImageName()
+                .equals(s.getImageName()));
     }
 
     public String toString() {
 
-        return "ClassName=" + this.getClass().getName() + ",loc=" + getLoc().toString() + ",owner="
-                + this.getOwner().toString() + ",isSelect=" + this.isSelected() + ",isaLive="
+        return "ClassName=" + this.getClass().getName() + ",loc="
+                + getLoc().toString() + ",owner=" + this.getOwner().toString()
+                + ",isSelect=" + this.isSelected() + ",isaLive="
                 + this.isAlive();
     }
 

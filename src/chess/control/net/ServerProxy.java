@@ -24,7 +24,7 @@ public class ServerProxy {
 
     private static ServerProxy instance;
 
-    private GameServer server;
+    private GameServer         server;
 
     public static ServerProxy getInstance() {
         if (instance == null) {
@@ -57,9 +57,9 @@ public class ServerProxy {
 
         private DatagramSocket dcpSocket = null;
         private DatagramPacket outPacket = null;
-        private InetAddress address;
-        private byte[] outBuf;
-        private final int PORT = 8888;
+        private InetAddress    address;
+        private byte[]         outBuf;
+        private final int      PORT      = 8888;
 
         public MulticastSender() {
             try {
@@ -82,7 +82,8 @@ public class ServerProxy {
                 dcpSocket = new DatagramSocket();
                 while (server.isGameOn()) {
                     outBuf = msg.getBytes();
-                    outPacket = new DatagramPacket(outBuf, outBuf.length, address, PORT);
+                    outPacket = new DatagramPacket(outBuf, outBuf.length,
+                            address, PORT);
                     dcpSocket.send(outPacket);
                     // System.out.println("Server sends : " + msg);
                     try {

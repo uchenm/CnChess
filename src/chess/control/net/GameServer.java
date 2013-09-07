@@ -29,18 +29,24 @@ import java.util.Set;
 import chess.control.ChessException;
 import chess.control.command.Command;
 import chess.control.command.JoinGameCommand;
+import chess.control.command.RejectCommand;
+import chess.control.command.RequestCommand;
+import chess.control.command.RequestCommand.RequestState;
+import chess.control.command.RequestVote;
 import chess.model.game.Game;
 
 public class GameServer extends Thread {
-    public static final int MAX_CLIENTS = 100;
-    private int port = 9090;
-    private ServerSocket serverSocket;
-    private boolean isGameOn = true;
+    public static final int     MAX_CLIENTS = 100;
+    private int                 port        = 9090;
+    private ServerSocket        serverSocket;
+    private boolean             isGameOn    = true;
     // private MulticastSender sender;
 
-    public Set<ClientThread> players;// = new Vector<ClientThread>();
+    private Set<ClientThread>   players;
 
-    private static Game game;
+    private Set<RequestCommand> requests    = new HashSet<RequestCommand>();
+
+    private static Game         game;
 
     public GameServer() {
         try {
@@ -93,11 +99,11 @@ public class GameServer extends Thread {
      */
     public class ClientThread implements Runnable {
 
-        private Socket socket;
-        private BufferedInputStream in = null;
+        private Socket               socket;
+        private BufferedInputStream  in  = null;
         private BufferedOutputStream out = null;
-        private ObjectOutputStream oo = null;
-        private ObjectInputStream oi = null;
+        private ObjectOutputStream   oo  = null;
+        private ObjectInputStream    oi  = null;
 
         public ClientThread(Socket sock) {
             socket = sock;
@@ -131,6 +137,14 @@ public class GameServer extends Thread {
                         } else {
                             boardcast(obj);
                         }
+
+                        if (obj instanceof RequestCommand) {
+                            requests.add((RequestCommand) obj);
+                        }
+
+                        if (obj instanceof RequestVote) {
+                            doVote((RequestVote) obj);
+                        }
                     }
                 } catch (ChessException e) {
                     // e.printStackTrace();
@@ -145,6 +159,36 @@ public class GameServer extends Thread {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+        }
+
+        public void doVote(RequestVote vote) throws ChessException {
+            System.out.println(" doVote() called.");
+            for (RequestCommand rc : requests) {
+                if (rc.getRequestId().equals(vote.getRequestId())) {
+                    rc.vote(vote);
+                    if (rc.getState().equals(RequestState.APPROVED)) {
+                        doApprove(rc);
+                    } else if (rc.getState().equals(RequestState.REJECTED)) {
+                        doReject(rc);
+                    }
+                }
+            }
+        }
+
+        public void doApprove(RequestCommand c) throws ChessException {
+            Command target = c.getTarget();
+            target.execute(game);
+            boardcast(target);
+            requests.remove(c);
+        }
+
+        // only need to notify the requester
+        public void doReject(RequestCommand c) throws ChessException {
+            System.out.println(c.getRequester().getName() + " 's "
+                    + c.getTopic() + " request has been rejected");
+
+            boardcast(new RejectCommand(c.getRequester(), c.getTopic()));
+            requests.remove(c);
         }
 
         public void close() {
@@ -203,7 +247,8 @@ public class GameServer extends Thread {
                     c.send(obj);
                     if (obj instanceof Game) {
                         Game g = (Game) obj;
-                        System.out.println("Players=" + g.getPlayers() + " got on server!");
+                        System.out.println("Players=" + g.getPlayers()
+                                + " got on server!");
                     }
                 }
             }

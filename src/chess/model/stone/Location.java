@@ -55,7 +55,8 @@ public final class Location implements Serializable {
     }
 
     public boolean isInLine(Location loc) {
-        return x == loc.getX() && y != loc.getY() || x != loc.getX() && y == loc.getY();
+        return x == loc.getX() && y != loc.getY() || x != loc.getX()
+                && y == loc.getY();
     }
 
     public String toString() {

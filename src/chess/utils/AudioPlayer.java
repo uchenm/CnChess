@@ -16,15 +16,15 @@ import java.awt.event.WindowEvent;
 
 @SuppressWarnings("serial")
 public class AudioPlayer extends Frame {
-    AudioClip clip = null;
-    FileDialog dialog = new FileDialog(this);
-    Label labelCopyright = new Label();
-    TextField textFieldFileName = new TextField();
-    Panel panel1 = new Panel();
-    Button buttonOpen = new Button();
-    Button buttonPlay = new Button();
-    Button buttonLoop = new Button();
-    Button buttonStop = new Button();
+    AudioClip  clip              = null;
+    FileDialog dialog            = new FileDialog(this);
+    Label      labelCopyright    = new Label();
+    TextField  textFieldFileName = new TextField();
+    Panel      panel1            = new Panel();
+    Button     buttonOpen        = new Button();
+    Button     buttonPlay        = new Button();
+    Button     buttonLoop        = new Button();
+    Button     buttonStop        = new Button();
 
     public AudioPlayer() {
         setTitle("AudioPlayer");
@@ -46,7 +46,8 @@ public class AudioPlayer extends Frame {
     private void jbInit() throws Exception {
         labelCopyright.setBackground(Color.darkGray);
         labelCopyright.setForeground(Color.orange);
-        labelCopyright.setText("Copyright (c) 2003 BeanSoft Studio. All rights reserved.");
+        labelCopyright
+                .setText("Copyright (c) 2003 BeanSoft Studio. All rights reserved.");
         this.setTitle("Java Audio Player");
         textFieldFileName.setEditable(false);
         buttonOpen.setLabel("open");
@@ -101,7 +102,8 @@ public class AudioPlayer extends Frame {
         if (dialog.getFile() != null) {
             String filename = dialog.getDirectory() + dialog.getFile();
             try {
-                setAudioClip(Applet.newAudioClip((new java.io.File(filename)).toURL()));
+                setAudioClip(Applet.newAudioClip((new java.io.File(filename))
+                        .toURL()));
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

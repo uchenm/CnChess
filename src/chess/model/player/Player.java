@@ -20,9 +20,9 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class Player implements Serializable {
 
-    private String name;
+    private String  name;
 
-    private Role role;
+    private Role    role;
 
     private boolean creator;
 
@@ -66,7 +66,13 @@ public class Player implements Serializable {
 
     public String toString() {
         return "player[name=" + this.getName() + ",role="
-                + (getRole() != null ? role.toString() : "") + ",isCreator=" + isCreator() + "]";
+                + (getRole() != null ? role.toString() : "") + ",isCreator="
+                + isCreator() + "]";
     }
 
+    public boolean equals(Player p) {
+        if (p == null)
+            return false;
+        return (p.name.equals(name) && p.role.equals(role) && p.creator == creator);
+    }
 }

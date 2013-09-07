@@ -50,16 +50,16 @@ import chess.model.player.RedRole;
 public class ChessLogin extends JFrame {
 
     // the width of the board frame
-    private int frameWidth = 450;
+    private int       frameWidth  = 450;
 
     // the height of the board frame
-    private int frameHeight = 520;
+    private int       frameHeight = 520;
 
     // size of window
     private Dimension wndSize;
 
     // the default toolkit of AWT
-    private Toolkit theKit;
+    private Toolkit   theKit;
 
     // private List serverlist;
     //
@@ -69,22 +69,22 @@ public class ChessLogin extends JFrame {
     // private ChessCreator chessCreator;
 
     // --------- the controllers showed in the frame ------------- //
-    Label l_pname = new Label("Player Name:");
-    TextField s_textname = new TextField(20);
-    Label l_serverip = new Label("Server IP:");
-    TextField s_Serverip = new TextField(20);
+    Label             l_pname     = new Label("Player Name:");
+    TextField         s_textname  = new TextField(20);
+    Label             l_serverip  = new Label("Server IP:");
+    TextField         s_Serverip  = new TextField(20);
 
     // List namelist = new List(10, true);
     // Label listTitle=new
     // Label(" No.          Creator Name                 IP Address");
-    Button bt_create = new Button("Create");
-    Button bt_join = new Button(" Join ");
-    Button bt_end = new Button(" End ");
+    Button            bt_create   = new Button("Create");
+    Button            bt_join     = new Button(" Join ");
+    Button            bt_end      = new Button(" End ");
 
     // --------- the controllers showed in the frame ------------- //
     // private String s_NameList;
 
-    private Player player;
+    private Player    player;
 
     public ChessLogin(Player player) {
         this.player = player;
@@ -157,8 +157,8 @@ public class ChessLogin extends JFrame {
         wndSize = theKit.getScreenSize();
 
         // determine the start point and the size of the board frame
-        setBounds((wndSize.width - frameWidth) / 2, (wndSize.height - frameHeight) / 2, frameWidth,
-                frameHeight);
+        setBounds((wndSize.width - frameWidth) / 2,
+                (wndSize.height - frameHeight) / 2, frameWidth, frameHeight);
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -166,8 +166,9 @@ public class ChessLogin extends JFrame {
 
         addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent e) {
-                setBounds((wndSize.width - frameWidth) / 2, (wndSize.height - frameHeight) / 2,
-                        frameWidth, frameHeight);
+                setBounds((wndSize.width - frameWidth) / 2,
+                        (wndSize.height - frameHeight) / 2, frameWidth,
+                        frameHeight);
 
             }
         });
@@ -209,7 +210,8 @@ public class ChessLogin extends JFrame {
 
                 ClientProxy.getInstance().startListening();
                 // ClientProxy.getInstance().initGame();
-                ClientProxy.getInstance().executeRemoteCommand(new JoinGameCommand(player));
+                ClientProxy.getInstance().executeRemoteCommand(
+                        new JoinGameCommand(player));
 
                 setVisible(false);
                 dispose();
@@ -229,7 +231,7 @@ public class ChessLogin extends JFrame {
         }
 
         private String serverIp;
-        private int port;
+        private int    port;
         private String name;
 
         public String getServerIp() {

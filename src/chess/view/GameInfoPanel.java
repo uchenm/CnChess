@@ -41,7 +41,7 @@ public class GameInfoPanel extends JPanel implements Observer {
 
     private PlayerInfoPanel redPlayerPanel;
     private PlayerInfoPanel blackPlayerPanel;
-    private JLabel gameStatus;
+    private JLabel          gameStatus;
 
     public void update(Observable obj, Object arg) {
 
@@ -123,7 +123,8 @@ public class GameInfoPanel extends JPanel implements Observer {
                 player = (Player) arg;
                 // System.out.println("NameObserver: Name changed to " + name);
                 this.nameLabel.setText(player.getName());
-                this.roleLabel.setText(player.getRole().isRed() ? "Red Player" : "Black Player");
+                this.roleLabel.setText(player.getRole().isRed() ? "Red Player"
+                        : "Black Player");
 
             }
         }
@@ -148,7 +149,8 @@ public class GameInfoPanel extends JPanel implements Observer {
         public void setPlayer(Player player) {
             this.player = player;
             this.nameLabel.setText(player.getName());
-            this.roleLabel.setText(player.getRole().isRed() ? "Red Player" : "Black Player");
+            this.roleLabel.setText(player.getRole().isRed() ? "Red Player"
+                    : "Black Player");
         }
 
         // public static void main(String[] args) {

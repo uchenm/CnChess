@@ -18,13 +18,13 @@ package chess.model.game;
 import chess.model.stone.Location;
 
 public class BoardModel {
-    private int width;
-    private int height;
+    private int          width;
+    private int          height;
 
-    private int gridWidth;
-    private int gridHeight;
+    private int          gridWidth;
+    private int          gridHeight;
     // the physical location of left_up grid.
-    private Location leftUpLoc;
+    private Location     leftUpLoc;
     // the coordination of each point
     private Location[][] coords = new Location[9][10];
 
@@ -43,8 +43,8 @@ public class BoardModel {
         leftUpLoc = new Location(gridWidth / 2, gridHeight / 2 + menuBarHeight);
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 10; j++) {
-                coords[i][j] = new Location(leftUpLoc.getX() + i * gridWidth, leftUpLoc.getY() + j
-                        * gridHeight);
+                coords[i][j] = new Location(leftUpLoc.getX() + i * gridWidth,
+                        leftUpLoc.getY() + j * gridHeight);
             }
         }
 
@@ -58,8 +58,10 @@ public class BoardModel {
         Location loc = new Location(-1, -1);
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 10; j++) {
-                if (coords[i][j].getX() < x && x < coords[i][j].getX() + gridWidth
-                        && coords[i][j].getY() < y && y < coords[i][j].getY() + gridHeight) {
+                if (coords[i][j].getX() < x
+                        && x < coords[i][j].getX() + gridWidth
+                        && coords[i][j].getY() < y
+                        && y < coords[i][j].getY() + gridHeight) {
                     loc = new Location(i, j);
                 }
             }

@@ -20,8 +20,8 @@ public class MulticastReceiver {
                 inPacket = new DatagramPacket(inBuf, inBuf.length);
                 socket.receive(inPacket);
                 String msg = new String(inBuf, 0, inPacket.getLength());
-                System.out.println("From " + inPacket.getAddress() + ":" + inPacket.getPort()
-                        + " Msg : " + msg);
+                System.out.println("From " + inPacket.getAddress() + ":"
+                        + inPacket.getPort() + " Msg : " + msg);
             }
         } catch (IOException ioe) {
             System.out.println(ioe);

@@ -59,6 +59,14 @@ public class ClientProxy {
         }
     }
 
+    public void sendObj(Object obj) {
+        try {
+            this.client.writeData(obj);
+        } catch (ChessException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void startListening() {
         this.client.start();
     }

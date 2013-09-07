@@ -24,25 +24,26 @@ import java.util.Vector;
 import chess.control.command.CommandProxy;
 import chess.control.command.GiveupCommand;
 import chess.control.command.MoveCommand;
-import chess.control.command.RegretCommand;
+import chess.control.command.RequestCommand;
 import chess.control.command.SeekPeaceCommand;
+import chess.control.command.TakebackCommand;
 import chess.control.event.ChessEvent;
 import chess.control.event.ChessEventListener;
 import chess.control.event.ChessMessage;
+import chess.model.ModelLocator;
 import chess.model.game.Game;
-import chess.model.game.Move;
 import chess.model.game.GameConstants.GameState;
+import chess.model.game.Move;
 import chess.model.player.Role;
 import chess.model.stone.Location;
 import chess.model.stone.Stone;
-import chess.model.ModelLocator;
 import chess.view.ViewHelper;
 
 public class GameController extends MouseAdapter {
 
     private Vector<ChessEventListener> listeners = new Vector<ChessEventListener>();
 
-    private static GameController instance;
+    private static GameController      instance;
 
     public static GameController getInstance() {
 
@@ -100,12 +101,14 @@ public class GameController extends MouseAdapter {
     public void mouseClicked(MouseEvent e) {
         Game cgame = ModelLocator.getInstance().getCurrentGame();
         if (cgame != null
-                && cgame.getGameState().equals(GameState.STARTED)
-                && (cgame.getGameType() == 0 || cgame.getCurrentRoleToPlay().equals(
-                        ModelLocator.getInstance().getPlayer().getRole()))) {
+                && cgame.getGameState().equals(GameState.GAME_ON)
+                && (cgame.getGameType() == 0 || cgame.getCurrentRoleToPlay()
+                        .equals(ModelLocator.getInstance().getPlayer()
+                                .getRole()))) {
             System.out.println("x=" + e.getX() + ",y=" + e.getY());
 
-            Location clickLoc = ModelLocator.getInstance().getBoard().getLoc(e.getX(), e.getY());
+            Location clickLoc = ModelLocator.getInstance().getBoard()
+                    .getLoc(e.getX(), e.getY());
             Location realLoc = ViewHelper.getViewLoc(clickLoc);
 
             System.out.println(realLoc.toString());
@@ -125,11 +128,13 @@ public class GameController extends MouseAdapter {
                 if (clickedStone == null || clickedStone != null
                         && !clickedStone.getOwner().equals(role)) {
                     if (cgame.getSelectedStone().isLegalMove(realLoc)
-                            && cgame.isSafeMove(cgame.getSelectedStone(), realLoc)) {
+                            && cgame.isSafeMove(cgame.getSelectedStone(),
+                                    realLoc)) {
                         moveStone(realLoc);
                     } else {
 
-                        this.fireChessEvent(new ChessMessage(ChessMessage.GENERAL_IN_DANGER,
+                        this.fireChessEvent(new ChessMessage(
+                                ChessMessage.GENERAL_IN_DANGER,
                                 "This is not the safe move, our opponent is going to win!!!"));
                         // pop up a message to remind the use.
                         // System.out.println("This is not the safe move, our opponent is going to win!!!");
@@ -168,8 +173,8 @@ public class GameController extends MouseAdapter {
 
         try {
             Game g = ModelLocator.getInstance().getCurrentGame();
-            Move move = new Move(g.getSelectedStone(), g.getSelectedStone().getLoc(), loc,
-                    g.getStone(loc));
+            Move move = new Move(g.getSelectedStone(), g.getSelectedStone()
+                    .getLoc(), loc, g.getStone(loc));
 
             new CommandProxy(new MoveCommand(move)).execute(g);
         } catch (ChessException ex) {
@@ -177,15 +182,20 @@ public class GameController extends MouseAdapter {
         }
     }
 
-    public void regretMove() {
+    public void takeBackRequest() {
 
         try {
             Game g = ModelLocator.getInstance().getCurrentGame();
-            if (g != null && g.getGameState().equals(GameState.STARTED)) {
+            if (g != null && g.getGameState().equals(GameState.GAME_ON)) {
                 if (!g.getGameStack().isEmpty()) {
                     // Move move = g.getGameStack().pop();
-                    Move move = g.getGameStack().lastElement();
-                    new CommandProxy(new RegretCommand(move)).execute(g);
+                    // Move move = g.getGameStack().lastElement();
+                    // new CommandProxy(new
+                    // TakebackRequestCommand(ModelLocator.getInstance().getPlayer())).execute(g);
+                    new CommandProxy(new RequestCommand(ModelLocator
+                            .getInstance().getPlayer(), "take back",
+                            new TakebackCommand(ModelLocator.getInstance()
+                                    .getPlayer()))).execute(g);
                 }
             }
             // new MoveCommand(g.getSelectedStone(), loc, g).execute();
@@ -197,8 +207,9 @@ public class GameController extends MouseAdapter {
     public void seekPeace() {
         try {
             Game g = ModelLocator.getInstance().getCurrentGame();
-            new CommandProxy(new SeekPeaceCommand(ModelLocator.getInstance().getPlayer()))
-                    .execute(g);
+            RequestCommand request = new RequestCommand(ModelLocator
+                    .getInstance().getPlayer(), "peace", new SeekPeaceCommand());
+            new CommandProxy(request).execute(g);
         } catch (ChessException ex) {
             ex.printStackTrace();
         }
@@ -207,7 +218,8 @@ public class GameController extends MouseAdapter {
     public void giveUp() {
         try {
             Game g = ModelLocator.getInstance().getCurrentGame();
-            new CommandProxy(new GiveupCommand(ModelLocator.getInstance().getPlayer())).execute(g);
+            new CommandProxy(new GiveupCommand(ModelLocator.getInstance()
+                    .getPlayer())).execute(g);
         } catch (ChessException ex) {
             ex.printStackTrace();
         }

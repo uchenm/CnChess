@@ -21,6 +21,9 @@ import javax.swing.JOptionPane;
 
 import chess.control.ChessException;
 import chess.model.game.Game;
+import chess.model.game.GameConstants.GameState;
+import chess.model.game.GameConstants.ResultType;
+import chess.model.game.GameResult;
 import chess.model.player.Player;
 
 @SuppressWarnings("serial")
@@ -33,11 +36,24 @@ public class GiveupCommand implements Command, Serializable {
 
     public void execute(Game game) throws ChessException {
         // move.doMove(game);
-        JOptionPane.showMessageDialog(null, player.getName() + " has given up the game!",
-                "Game over", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, player.getName()
+                + " has given up the game!", "Game over",
+                JOptionPane.INFORMATION_MESSAGE);
         // (null, player.getName()
         // + " is seeking for peace, agree?", "Seeking Peace",
         // JOptionPane.YES_NO_OPTION);
+
+        GameResult gameResult = new GameResult();
+        ResultType resultType = player.getRole().isRed() ? ResultType.BLACKWIN
+                : ResultType.REDWIN;
+        gameResult.setResultType(resultType);
+        gameResult.setBlackPlayer(game.getBlackPlayer());
+        gameResult.setRedPlayer(game.getRedPlayer());
+
+        game.setGameResult(gameResult);
+
+        game.setGameState(GameState.GAME_OVER);
+        game.saveGame();
 
     }
 

@@ -20,11 +20,11 @@ import javax.swing.DefaultListModel;
 import chess.model.game.GameConstants.GameState;
 
 public class GameReplayer {
-    private Game game;
+    private Game             game;
 
-    private int currentStep = 0;
+    private int              currentStep = 0;
 
-    private DefaultListModel listModel = new DefaultListModel();
+    private DefaultListModel listModel   = new DefaultListModel();
 
     public DefaultListModel getListModel() {
         return listModel;
@@ -55,7 +55,8 @@ public class GameReplayer {
             doMove(move);
             game.setReplayMove(move);
             listModel.addElement(move.getStone().getOwner().getName() + ":"
-                    + move.getStone().getName() + " " + move.getFrom() + "->" + move.getTo());
+                    + move.getStone().getName() + " " + move.getFrom() + "->"
+                    + move.getTo());
         }
     }
 
@@ -129,7 +130,7 @@ public class GameReplayer {
         // judge if game is over and if General is in Danger
         if (game.isInTrouble(game.getCurrentRoleToPlay())) {
             if (game.isLoosingGame(game.getCurrentRoleToPlay())) {
-                game.setGameState(GameState.ENDED);
+                game.setGameState(GameState.GAME_OVER);
             }
         }
     }

@@ -83,18 +83,18 @@ public class GameBoard extends JFrame {
      */
     private static final long serialVersionUID = 1L;
 
-    private ChessPanel chessPanel;
+    private ChessPanel        chessPanel;
 
-    private ChessMenu chessMenu;
+    private ChessMenu         chessMenu;
 
-    private StatusBar statusBar;
+    private StatusBar         statusBar;
 
-    private MusicPlayer bgMusicPlayer;
+    private MusicPlayer       bgMusicPlayer;
 
-    private GameInfoPanel inforPanel;
+    private GameInfoPanel     inforPanel;
     // private JList stepList;
 
-    private GameStackPanel stackPanel;
+    private GameStackPanel    stackPanel;
 
     public GameBoard() throws IOException {
         final int width = 600, height = 660, boardWidth = 1024;
@@ -142,59 +142,60 @@ public class GameBoard extends JFrame {
 
         this.setVisible(true);
         // GameController.getInstance().setGameBoard(this);
-        GameController.getInstance().addChessEventListener(new ChessEventListener() {
-            public void onChessEvent(ChessEvent e) {
-                // System.out.println(e.getSource()+" received!");
-                ChessMessage msg = (ChessMessage) e.getSource();
-                switch (msg.getMsgType()) {
+        GameController.getInstance().addChessEventListener(
+                new ChessEventListener() {
+                    public void onChessEvent(ChessEvent e) {
+                        // System.out.println(e.getSource()+" received!");
+                        ChessMessage msg = (ChessMessage) e.getSource();
+                        switch (msg.getMsgType()) {
 
-                case ChessMessage.GENERAL_IN_DANGER:
-                    if (ModelLocator.getInstance().isSoundEffect())
-                        MusicUtil.playSound("qq/danger");
-                    statusBar.setMessage(msg.getMsgContent());
-                    chessPanel.updateUI();
-                    break;
-                case ChessMessage.STONE_MOVE:
-                    if (ModelLocator.getInstance().isSoundEffect())
-                        MusicUtil.playSound("qq/go");
-                    statusBar.setMessage(msg.getMsgContent());
-                    chessPanel.updateUI();
-                    break;
-                case ChessMessage.STONE_KILLED:
-                    if (ModelLocator.getInstance().isSoundEffect())
-                        MusicUtil.playSound("qq/eat");
-                    statusBar.setMessage(msg.getMsgContent());
-                    chessPanel.updateUI();
-                    break;
-                case ChessMessage.STONE_SELECTED:
-                    if (ModelLocator.getInstance().isSoundEffect())
-                        MusicUtil.playSound("qq/select");
-                    statusBar.setMessage(msg.getMsgContent());
-                    chessPanel.updateUI();
-                    break;
-                case ChessMessage.GAME_OVER:
-                    if (ModelLocator.getInstance().isSoundEffect())
-                        MusicUtil.playSound("qq/Female_jueshagamewin");
-                    statusBar.setMessage(msg.getMsgContent());
-                    chessPanel.updateUI();
-                    break;
-                case ChessMessage.BG_MUSIC:
-                    if (ModelLocator.getInstance().isBgmusic())
-                        bgMusicPlayer.playMusic();
-                    else
-                        bgMusicPlayer.closeMusic();
-                    break;
-                case ChessMessage.DEFAULT:
-                default:
-                    chessPanel.updateUI();
-                }
+                        case ChessMessage.GENERAL_IN_DANGER:
+                            if (ModelLocator.getInstance().isSoundEffect())
+                                MusicUtil.playSound("qq/danger");
+                            statusBar.setMessage(msg.getMsgContent());
+                            chessPanel.updateUI();
+                            break;
+                        case ChessMessage.STONE_MOVE:
+                            if (ModelLocator.getInstance().isSoundEffect())
+                                MusicUtil.playSound("qq/go");
+                            statusBar.setMessage(msg.getMsgContent());
+                            chessPanel.updateUI();
+                            break;
+                        case ChessMessage.STONE_KILLED:
+                            if (ModelLocator.getInstance().isSoundEffect())
+                                MusicUtil.playSound("qq/eat");
+                            statusBar.setMessage(msg.getMsgContent());
+                            chessPanel.updateUI();
+                            break;
+                        case ChessMessage.STONE_SELECTED:
+                            if (ModelLocator.getInstance().isSoundEffect())
+                                MusicUtil.playSound("qq/select");
+                            statusBar.setMessage(msg.getMsgContent());
+                            chessPanel.updateUI();
+                            break;
+                        case ChessMessage.GAME_OVER:
+                            if (ModelLocator.getInstance().isSoundEffect())
+                                MusicUtil.playSound("qq/Female_jueshagamewin");
+                            statusBar.setMessage(msg.getMsgContent());
+                            chessPanel.updateUI();
+                            break;
+                        case ChessMessage.BG_MUSIC:
+                            if (ModelLocator.getInstance().isBgmusic())
+                                bgMusicPlayer.playMusic();
+                            else
+                                bgMusicPlayer.closeMusic();
+                            break;
+                        case ChessMessage.DEFAULT:
+                        default:
+                            chessPanel.updateUI();
+                        }
 
-            }
-        });
+                    }
+                });
     }
 
-    private void initChessPanel(final int width, final int height, final int boardWidth)
-            throws IOException {
+    private void initChessPanel(final int width, final int height,
+            final int boardWidth) throws IOException {
 
         JPanel leftPanel = new JPanel();
         leftPanel.setLayout(new BorderLayout());
@@ -204,7 +205,8 @@ public class GameBoard extends JFrame {
         lPane.setPreferredSize(new Dimension(width, height));
 
         // Chess Board as background image.
-        Image backgroundImg = ImageIO.read(new File("res/images/ChessBoard.png"));
+        Image backgroundImg = ImageIO
+                .read(new File("res/images/ChessBoard.png"));
         ImagePanel background = new ImagePanel(backgroundImg, width, height);
 
         lPane.add(background, new Integer(0));
@@ -262,7 +264,7 @@ public class GameBoard extends JFrame {
             takeBack.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     // JButton menu = (JButton) e.getSource();
-                    GameController.getInstance().regretMove();
+                    GameController.getInstance().takeBackRequest();
                 }
             });
             dapu.addActionListener(new ActionListener() {
@@ -274,7 +276,8 @@ public class GameBoard extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     ModelLocator.getInstance().setRedOnBottom(
                             !ModelLocator.getInstance().isRedOnBottom());
-                    ModelLocator.getInstance().getCurrentGame().updateObsevers();
+                    ModelLocator.getInstance().getCurrentGame()
+                            .updateObsevers();
                 }
             });
         }
@@ -284,7 +287,7 @@ public class GameBoard extends JFrame {
     @SuppressWarnings("serial")
     public class GameStackPanel extends JPanel implements Observer {
 
-        private JList stepList;
+        private JList            stepList;
         private DefaultListModel listModel = new DefaultListModel();
 
         public GameStackPanel() {
@@ -305,9 +308,12 @@ public class GameBoard extends JFrame {
                     Enumeration<Move> e = moves.elements();
                     while (e.hasMoreElements()) {
                         Move move = e.nextElement();
-                        listModel.addElement(move.getStone().getOwner().getName() + ":"
-                                + move.getStone().getName() + " " + move.getFrom() + "->"
-                                + move.getTo());
+                        listModel.addElement(move.getStone().getOwner()
+                                .getName()
+                                + ":"
+                                + move.getStone().getName()
+                                + " "
+                                + move.getFrom() + "->" + move.getTo());
                     }
                 }
             }
@@ -345,8 +351,10 @@ public class GameBoard extends JFrame {
             JMenuItem openItem = new JMenuItem("Open Game");// load game
             JMenuItem saveItem = new JMenuItem("Save Game");
 
-            JCheckBoxMenuItem bgmusic = new JCheckBoxMenuItem("Background Music");
-            JCheckBoxMenuItem soundEffect = new JCheckBoxMenuItem("Game Sound effect");
+            JCheckBoxMenuItem bgmusic = new JCheckBoxMenuItem(
+                    "Background Music");
+            JCheckBoxMenuItem soundEffect = new JCheckBoxMenuItem(
+                    "Game Sound effect");
 
             JMenuItem exitItem = new JMenuItem("Exit");
             JMenuItem aboutItem = new JMenuItem("About");
@@ -361,10 +369,12 @@ public class GameBoard extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     // create multiple result JOptionPane
                     JTextField name1 = new JTextField(10);
-                    Role[] roles1 = { new BlackRole(), new RedRole(), new ObseverRole() };
+                    Role[] roles1 = { new BlackRole(), new RedRole(),
+                            new ObseverRole() };
                     JComboBox role1 = new JComboBox(roles1);
                     JTextField name2 = new JTextField(10);
-                    Role[] roles2 = { new RedRole(), new BlackRole(), new ObseverRole() };
+                    Role[] roles2 = { new RedRole(), new BlackRole(),
+                            new ObseverRole() };
                     JComboBox role2 = new JComboBox(roles2);
 
                     JPanel myPanel = new JPanel();
@@ -383,18 +393,22 @@ public class GameBoard extends JFrame {
                     myPanel.add(role2);
 
                     int result = JOptionPane.showConfirmDialog(null, myPanel,
-                            "Please Enter Your Name and Role", JOptionPane.OK_CANCEL_OPTION);
+                            "Please Enter Your Name and Role",
+                            JOptionPane.OK_CANCEL_OPTION);
                     if (result == JOptionPane.OK_OPTION) {
                         String playerName1 = name1.getText();
                         Role playerRole1 = (Role) role1.getSelectedItem();
-                        Player creator = new Player(playerName1, playerRole1, true);
+                        Player creator = new Player(playerName1, playerRole1,
+                                true);
 
                         String playerName2 = name2.getText();
                         Role playerRole2 = (Role) role2.getSelectedItem();
-                        Player joiner = new Player(playerName2, playerRole2, false);
+                        Player joiner = new Player(playerName2, playerRole2,
+                                false);
 
                         GameController.getInstance().newGame();
-                        Game currentGame = ModelLocator.getInstance().getCurrentGame();
+                        Game currentGame = ModelLocator.getInstance()
+                                .getCurrentGame();
                         currentGame.addObserver(chessPanel);
                         currentGame.addObserver(inforPanel);
                         currentGame.addObserver(stackPanel);
@@ -416,8 +430,10 @@ public class GameBoard extends JFrame {
                                 "Chinese Chess Game File", "cnchess");
                         chooser.setFileFilter(filter);
                         chooser.showOpenDialog(null);
-                        String filepath = chooser.getSelectedFile().getAbsolutePath();
-                        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filepath));
+                        String filepath = chooser.getSelectedFile()
+                                .getAbsolutePath();
+                        ObjectInputStream ois = new ObjectInputStream(
+                                new FileInputStream(filepath));
                         Game game = (Game) ois.readObject();
 
                         new ReplayBoard(game);
@@ -439,7 +455,8 @@ public class GameBoard extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     // create multiple result JOptionPane
                     JTextField name = new JTextField(10);
-                    Role[] roles = { new BlackRole(), new RedRole(), new ObseverRole() };
+                    Role[] roles = { new BlackRole(), new RedRole(),
+                            new ObseverRole() };
                     JComboBox role = new JComboBox(roles);
                     JPanel myPanel = new JPanel();
                     myPanel.add(new JLabel("Name:"));
@@ -449,7 +466,8 @@ public class GameBoard extends JFrame {
                     myPanel.add(role);
 
                     int result = JOptionPane.showConfirmDialog(null, myPanel,
-                            "Please Enter Your Name and Role", JOptionPane.OK_CANCEL_OPTION);
+                            "Please Enter Your Name and Role",
+                            JOptionPane.OK_CANCEL_OPTION);
                     if (result == JOptionPane.OK_OPTION) {
                         Game currentGame = new Game();
                         currentGame.setGameType(1);
@@ -462,15 +480,16 @@ public class GameBoard extends JFrame {
 
                         String playerName = name.getText();
                         Role playerRole = (Role) role.getSelectedItem();
-                        Player creator = new Player(playerName, playerRole, true);
+                        Player creator = new Player(playerName, playerRole,
+                                true);
 
                         ServerProxy.getInstance().startServer();
                         GameClient client = new GameClient("127.0.0.1", 9090);
                         ClientProxy.getInstance().setClient(client);
                         ClientProxy.getInstance().startListening();
                         // ClientProxy.getInstance().initGame();
-                        ClientProxy.getInstance()
-                                .executeRemoteCommand(new JoinGameCommand(creator));
+                        ClientProxy.getInstance().executeRemoteCommand(
+                                new JoinGameCommand(creator));
                         ModelLocator.getInstance().setPlayer(creator);
                     }
                 }
@@ -484,7 +503,8 @@ public class GameBoard extends JFrame {
                     // login.setVisible(true);
                     JTextField name = new JTextField(10);
                     JTextField serverIp = new JTextField("127.0.0.1");
-                    Role[] roles = { new RedRole(), new BlackRole(), new ObseverRole() };
+                    Role[] roles = { new RedRole(), new BlackRole(),
+                            new ObseverRole() };
                     JComboBox role = new JComboBox(roles);
                     JPanel myPanel = new JPanel();
                     myPanel.add(new JLabel("Name:"));
@@ -495,7 +515,8 @@ public class GameBoard extends JFrame {
                     myPanel.add(new JLabel("Server IP:"));
                     myPanel.add(serverIp);
                     int result = JOptionPane.showConfirmDialog(null, myPanel,
-                            "Please Enter Your Name and Role", JOptionPane.OK_CANCEL_OPTION);
+                            "Please Enter Your Name and Role",
+                            JOptionPane.OK_CANCEL_OPTION);
                     if (result == JOptionPane.OK_OPTION) {
                         Game currentGame = new Game();
                         currentGame.setGameType(1);
@@ -508,7 +529,8 @@ public class GameBoard extends JFrame {
 
                         String playerName = name.getText();
                         Role playerRole = (Role) role.getSelectedItem();
-                        Player joiner = new Player(playerName, playerRole, false);
+                        Player joiner = new Player(playerName, playerRole,
+                                false);
                         String ip = serverIp.getText();
 
                         // ServerProxy.getInstance().startServer();
@@ -516,7 +538,8 @@ public class GameBoard extends JFrame {
                         ClientProxy.getInstance().setClient(client);
                         ClientProxy.getInstance().startListening();
                         // ClientProxy.getInstance().initGame();
-                        ClientProxy.getInstance().executeRemoteCommand(new JoinGameCommand(joiner));
+                        ClientProxy.getInstance().executeRemoteCommand(
+                                new JoinGameCommand(joiner));
                         ModelLocator.getInstance().setPlayer(joiner);
                     }
                 }
@@ -546,19 +569,21 @@ public class GameBoard extends JFrame {
             aboutItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     try {
-                        JLabel label = new JLabel(new ImageIcon(ImageIO.read(new File(
-                                "res/chess.jpg"))));
+                        JLabel label = new JLabel(new ImageIcon(ImageIO
+                                .read(new File("res/chess.jpg"))));
                         JTextArea aboutText = new JTextArea();
                         aboutText.setEditable(false);
                         // aboutText.setFont(FontUtil.myFont1);
 
-                        aboutText.setText("Author: Ming Chen \nVersion: 1.0 \n");
+                        aboutText
+                                .setText("Author: Ming Chen \nVersion: 1.0 \n");
                         JDialog dialog = new JDialog();
                         dialog.add(label, BorderLayout.WEST);
                         // dialog.add(new JScrollPane(ablutText),
                         // BorderLayout.CENTER);
                         dialog.add(aboutText, BorderLayout.CENTER);
-                        dialog.setIconImage(ImageIO.read(new File("res/chess.jpg")));
+                        dialog.setIconImage(ImageIO.read(new File(
+                                "res/chess.jpg")));
                         dialog.setTitle("About");
 
                         dialog.setSize(480, 160);

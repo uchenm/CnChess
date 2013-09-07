@@ -27,10 +27,10 @@ public class Move implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Stone stone;
-    private Location from;
-    private Location to;
-    private Stone target;
+    private Stone             stone;
+    private Location          from;
+    private Location          to;
+    private Stone             target;
 
     public Move(Stone stone, Location from, Location to, Stone target) {
         this.stone = stone;
@@ -76,8 +76,8 @@ public class Move implements Serializable {
                 + from
                 + " to "
                 + to
-                + (target != null ? "killing " + target.getOwner().getName() + "'s "
-                        + target.getName() : ""));
+                + (target != null ? "killing " + target.getOwner().getName()
+                        + "'s " + target.getName() : ""));
 
         // play move sound
         // MusicUtil.playSound("eat");
@@ -92,10 +92,11 @@ public class Move implements Serializable {
         // judge if game is over and if General is in Danger
         if (game.isInTrouble(game.getCurrentRoleToPlay())) {
             if (game.isLoosingGame(game.getCurrentRoleToPlay())) {
-                game.setStatusMessage(game.getOwner(game.getCurrentRoleToPlay()).getName()
+                game.setStatusMessage(game
+                        .getOwner(game.getCurrentRoleToPlay()).getName()
                         + " lost the game!!");
-                ResultType resultType = game.getCurrentRoleToPlay().isRed() ? ResultType.BlackWin
-                        : ResultType.RedWin;
+                ResultType resultType = game.getCurrentRoleToPlay().isRed() ? ResultType.BLACKWIN
+                        : ResultType.REDWIN;
                 GameResult gameResult = new GameResult();
                 gameResult.setResultType(resultType);
                 gameResult.setBlackPlayer(game.getBlackPlayer());
@@ -103,11 +104,12 @@ public class Move implements Serializable {
 
                 game.setGameResult(gameResult);
 
-                game.setGameState(GameState.ENDED);
+                game.setGameState(GameState.GAME_OVER);
 
                 game.saveGame();
             } else {
-                game.setStatusMessage(game.getOwner(game.getCurrentRoleToPlay()).getName()
+                game.setStatusMessage(game
+                        .getOwner(game.getCurrentRoleToPlay()).getName()
                         + "'s General is in trouble!!!, please take action!!!");
             }
         }
@@ -135,10 +137,12 @@ public class Move implements Serializable {
         // judge if game is over and if General is in Danger
         if (game.isInTrouble(game.getCurrentRoleToPlay())) {
             if (game.isLoosingGame(game.getCurrentRoleToPlay())) {
-                game.setStatusMessage(game.getOwner(game.getCurrentRoleToPlay()).getName()
+                game.setStatusMessage(game
+                        .getOwner(game.getCurrentRoleToPlay()).getName()
                         + " lost the game!!");
             } else {
-                game.setStatusMessage(game.getOwner(game.getCurrentRoleToPlay()).getName()
+                game.setStatusMessage(game
+                        .getOwner(game.getCurrentRoleToPlay()).getName()
                         + "'s General is in trouble!!!, please take action!!!");
             }
         }

@@ -35,7 +35,8 @@ public class MusicUtil {
                     // AudioSystem.getAudioInputStream(
                     // Main.class.getResourceAsStream("/path/to/sounds/" +
                     // url));
-                    AudioInputStream inputStream = AudioSystem.getAudioInputStream(soundFile);
+                    AudioInputStream inputStream = AudioSystem
+                            .getAudioInputStream(soundFile);
                     clip.open(inputStream);
                     clip.start();
                 } catch (Exception e) {
@@ -57,7 +58,8 @@ public class MusicUtil {
                     // AudioSystem.getAudioInputStream(
                     // Main.class.getResourceAsStream("/path/to/sounds/" +
                     // url));
-                    AudioInputStream inputStream = AudioSystem.getAudioInputStream(soundFile);
+                    AudioInputStream inputStream = AudioSystem
+                            .getAudioInputStream(soundFile);
                     clip.open(inputStream);
                     clip.loop(-1);
                 } catch (Exception e) {

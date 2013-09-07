@@ -53,13 +53,16 @@ public class Cannon extends Stone implements Cloneable {
 
         // the current location and the location not in the same line is illegal
         if (this.loc.equals(loc)
-                || (this.loc.getX() != loc.getX() && this.loc.getY() != loc.getY())) {
+                || (this.loc.getX() != loc.getX() && this.loc.getY() != loc
+                        .getY())) {
             result = false;
         }
         // when in the same VARTICAL line
         else if (this.loc.getX() == loc.getX()) {
-            firstloc = (this.loc.getY() < loc.getY() ? this.loc.getY() : loc.getY());
-            secondloc = (this.loc.getY() > loc.getY() ? this.loc.getY() : loc.getY());
+            firstloc = (this.loc.getY() < loc.getY() ? this.loc.getY() : loc
+                    .getY());
+            secondloc = (this.loc.getY() > loc.getY() ? this.loc.getY() : loc
+                    .getY());
             stonecount = 0;
 
             for (int i = firstloc + 1; i < secondloc; i++) {
@@ -79,8 +82,10 @@ public class Cannon extends Stone implements Cloneable {
         }
         // when in the same HORIZANTAL line
         else if (this.loc.getY() == loc.getY()) {
-            firstloc = (this.loc.getX() < loc.getX() ? this.loc.getX() : loc.getX());
-            secondloc = (this.loc.getX() > loc.getX() ? this.loc.getX() : loc.getX());
+            firstloc = (this.loc.getX() < loc.getX() ? this.loc.getX() : loc
+                    .getX());
+            secondloc = (this.loc.getX() > loc.getX() ? this.loc.getX() : loc
+                    .getX());
             stonecount = 0;
 
             for (int i = firstloc + 1; i < secondloc; i++) {

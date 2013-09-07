@@ -29,13 +29,13 @@ import chess.model.game.Game;
 
 public class GameClient extends Thread {
 
-    private Socket socket = null;
-    private BufferedInputStream in = null;
-    private BufferedOutputStream out = null;
-    private ObjectOutputStream oo = null;
-    private ObjectInputStream oi = null;
-    private String serverip;
-    private int port;
+    private Socket               socket = null;
+    private BufferedInputStream  in     = null;
+    private BufferedOutputStream out    = null;
+    private ObjectOutputStream   oo     = null;
+    private ObjectInputStream    oi     = null;
+    private String               serverip;
+    private int                  port;
 
     public GameClient(String serverIp, int port) {
         this.serverip = serverIp;
@@ -77,14 +77,16 @@ public class GameClient extends Thread {
                         // serverGame.getPlayers());
                         // do synchronize with the server
                         // ModelLocator.getInstance().setCurrentGame(game);
-                        ModelLocator.getInstance().getCurrentGame().syncWithServer(serverGame);
+                        ModelLocator.getInstance().getCurrentGame()
+                                .syncWithServer(serverGame);
                         // ModelLocator.getInstance().getCurrentGame().
                         // GameController.getInstance().fireChessEvent(new
                         // ChessMessage("update UI"));
                     }
                     if (obj instanceof Command) {
                         Command command = (Command) obj;
-                        command.execute(ModelLocator.getInstance().getCurrentGame());
+                        command.execute(ModelLocator.getInstance()
+                                .getCurrentGame());
                     }
                 }
             } catch (ChessException e) {

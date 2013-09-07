@@ -58,14 +58,15 @@ public class General extends Stone implements Cloneable {
                     && loc.getX() <= 5
                     && loc.getY() >= 7
                     && loc.getY() <= 9
-                    && ((Math.abs(xdiff) == 0 && Math.abs(ydiff) == 1) || (Math.abs(xdiff) == 1 && Math
-                            .abs(ydiff) == 0))) {
+                    && ((Math.abs(xdiff) == 0 && Math.abs(ydiff) == 1) || (Math
+                            .abs(xdiff) == 1 && Math.abs(ydiff) == 0))) {
                 result = true;
             }
 
             // one general could kill another if that one comes into its face.
             Stone s = game.getStone(loc);
-            if (this.getLoc().getX() == loc.getX() && s != null && !s.getOwner().isRed()
+            if (this.getLoc().getX() == loc.getX() && s != null
+                    && !s.getOwner().isRed()
                     && s.getClass().getName().equals("chess.stone.General")
                     && !game.haveStones(this.getLoc(), loc)) {
                 result = true;
@@ -79,13 +80,14 @@ public class General extends Stone implements Cloneable {
                     && loc.getX() <= 5
                     && loc.getY() >= 0
                     && loc.getY() <= 2
-                    && ((Math.abs(xdiff) == 0 && Math.abs(ydiff) == 1) || (Math.abs(xdiff) == 1 && Math
-                            .abs(ydiff) == 0))) {
+                    && ((Math.abs(xdiff) == 0 && Math.abs(ydiff) == 1) || (Math
+                            .abs(xdiff) == 1 && Math.abs(ydiff) == 0))) {
                 result = true;
             }
             // one general could kill another if that one comes into its face.
             Stone s = game.getStone(loc);
-            if (this.getLoc().getX() == loc.getX() && s != null && s.getOwner().isRed()
+            if (this.getLoc().getX() == loc.getX() && s != null
+                    && s.getOwner().isRed()
                     && s.getClass().getName().equals("chess.stone.General")
                     && !game.haveStones(this.getLoc(), loc)) {
                 result = true;

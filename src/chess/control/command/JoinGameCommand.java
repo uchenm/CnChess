@@ -51,7 +51,8 @@ public class JoinGameCommand implements Command, Serializable {
         // third and others will be observers.
         if (players != null && !players.isEmpty()) {
             if (players.size() == 1 && !player.isCreator()) {
-                player.setRole(players.get(0).getRole().isBlack() ? new RedRole() : new BlackRole());
+                player.setRole(players.get(0).getRole().isBlack() ? new RedRole()
+                        : new BlackRole());
                 game.addPlayer(player);
             } else if (players.size() >= 2) {
                 player.setRole(new ObseverRole());

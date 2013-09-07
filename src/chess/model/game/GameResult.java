@@ -24,31 +24,32 @@ import chess.model.player.Player;
 public class GameResult implements Serializable {
 
     private ResultType resultType;
-    private Player redPlayer;
-    private Player blackPlayer;
+    private Player     redPlayer;
+    private Player     blackPlayer;
 
     public GameResult() {
 
     }
 
-    public GameResult(ResultType resultType, Player redPlayer, Player blackPlayer) {
+    public GameResult(ResultType resultType, Player redPlayer,
+            Player blackPlayer) {
         this.resultType = resultType;
         this.redPlayer = redPlayer;
         this.blackPlayer = blackPlayer;
     }
 
     public Player getWinner() {
-        if (resultType.equals(ResultType.BlackWin))
+        if (resultType.equals(ResultType.BLACKWIN))
             return blackPlayer;
-        if (resultType.equals(ResultType.RedWin))
+        if (resultType.equals(ResultType.REDWIN))
             return redPlayer;
         return null;
     }
 
     public Player getLooser() {
-        if (resultType.equals(ResultType.BlackWin))
+        if (resultType.equals(ResultType.BLACKWIN))
             return redPlayer;
-        if (resultType.equals(ResultType.RedWin))
+        if (resultType.equals(ResultType.REDWIN))
             return blackPlayer;
         return null;
     }
